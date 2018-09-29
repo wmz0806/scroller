@@ -303,6 +303,7 @@ DOMScroller.prototype = {
         getScale = _options.getScale;
 
     var onTouchEnd = function onTouchEnd(e) {
+      startTouches = undefined;
       scroller.doTouchEnd(e.timeStamp);
       releaseLockTimer = setTimeout(function () {
         lockMouse = false;
