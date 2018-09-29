@@ -690,7 +690,6 @@ var members = {
    * Touch move handler for scrolling support
    */
   doTouchMove: function doTouchMove(touches, timeStamp, scale) {
-
     // Array-like check is enough here
     if (touches.length == null) {
       throw new Error("Invalid touch list: " + touches);

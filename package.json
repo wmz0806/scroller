@@ -1,34 +1,34 @@
 {
   "_args": [
     [
-      "zscroller@0.4.7",
-      "E:\\GOG_APP\\GoldenBeanShopMall-h5"
+      "zscroller@0.4.8",
+      "E:\\GSG_APP\\TaoFilm-H5"
     ]
   ],
-  "_development": true,
-  "_from": "zscroller@0.4.7",
-  "_id": "zscroller@0.4.7",
+  "_from": "zscroller@0.4.8",
+  "_id": "zscroller@0.4.8",
   "_inBundle": false,
-  "_integrity": "sha1-OVbm59+1F1BY3w2pq65uSDQIj4o=",
+  "_integrity": "sha512-G5NiNLKx2+QhhvZi2yV1jjVXY50otktxkseX2hG2N/eixohOUk0AY8ZpbAxNqS9oJS/NxItCsowupy2tsXxAMw==",
   "_location": "/zscroller",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "zscroller@0.4.7",
+    "raw": "zscroller@0.4.8",
     "name": "zscroller",
     "escapedName": "zscroller",
-    "rawSpec": "0.4.7",
+    "rawSpec": "0.4.8",
     "saveSpec": null,
-    "fetchSpec": "0.4.7"
+    "fetchSpec": "0.4.8"
   },
   "_requiredBy": [
     "#DEV:/",
+    "/lard-ui",
     "/rmc-list-view"
   ],
-  "_resolved": "http://registry.npm.taobao.org/zscroller/download/zscroller-0.4.7.tgz",
-  "_spec": "0.4.7",
-  "_where": "E:\\GOG_APP\\GoldenBeanShopMall-h5",
+  "_resolved": "https://registry.npmjs.org/zscroller/-/zscroller-0.4.8.tgz",
+  "_spec": "0.4.8",
+  "_where": "E:\\GSG_APP\\TaoFilm-H5",
   "bugs": {
     "url": "https://github.com/yiminghe/zscroller/issues"
   },
@@ -57,23 +57,23 @@
     "dom scroller"
   ],
   "licenses": "MIT",
-  "main": "./src/DOMScroller",
-  "module": "./src/DOMScroller",
+  "main": "./lib/DOMScroller",
+  "module": "./es/DOMScroller",
   "name": "zscroller",
   "pre-commit": [
     "lint"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wmz0806/scroller.git"
+    "url": "git+https://github.com/yiminghe/zscroller.git"
   },
   "scripts": {
     "build": "rc-tools run build",
-    "compile": "rc-tools run compile --babel-runtime",
+    "compile": "rc-tools run compile",
     "gh-pages": "rc-tools run gh-pages",
     "lint": "rc-tools run lint",
-    "pub": "rc-tools run pub --babel-runtime",
+    "pub": "rc-tools run pub",
     "start": "rc-tools run server"
   },
-  "version": "0.4.7"
+  "version": "0.4.8"
 }

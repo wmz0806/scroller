@@ -1,4 +1,6 @@
-import _extends from 'babel-runtime/helpers/extends';
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
 import Scroller from './Scroller';
 
 var MIN_INDICATOR_SIZE = 8;
@@ -275,7 +277,7 @@ DOMScroller.prototype = {
     var container = this.container,
         scroller = this.scroller;
 
-
+    var startTouches;
     this.bindEvent(container, 'touchstart', function (e) {
       lockMouse = true;
       if (releaseLockTimer) {
@@ -286,6 +288,9 @@ DOMScroller.prototype = {
       if (e.touches[0] && e.touches[0].target && e.touches[0].target.tagName.match(/input|textarea|select/i) || _this2.disabled) {
         return;
       }
+
+      startTouches = e.touches;
+
       _this2.clearScrollbarTimer();
       // reflow since the container may have changed
       _this2.reflow();
@@ -294,7 +299,8 @@ DOMScroller.prototype = {
 
     var _options = this.options,
         preventDefaultOnTouchMove = _options.preventDefaultOnTouchMove,
-        zooming = _options.zooming;
+        zooming = _options.zooming,
+        getScale = _options.getScale;
 
     var onTouchEnd = function onTouchEnd(e) {
       scroller.doTouchEnd(e.timeStamp);
@@ -306,12 +312,13 @@ DOMScroller.prototype = {
     if (preventDefaultOnTouchMove !== false) {
       this.bindEvent(container, 'touchmove', function (e) {
         e.preventDefault();
-        scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
+
+        scroller.doTouchMove(e.touches, e.timeStamp, getScale ? getScale(e, startTouches) : e.scale);
         iOSWebViewFix(e, onTouchEnd);
       }, willPreventDefault);
     } else {
       this.bindEvent(container, 'touchmove', function (e) {
-        scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
+        scroller.doTouchMove(e.touches, e.timeStamp, getScale ? getScale(e, startTouches) : e.scale);
         iOSWebViewFix(e, onTouchEnd);
       }, willNotPreventDefault);
     }
