@@ -72,8 +72,10 @@ Scroller = function Scroller(callback, options) {
     penetrationDeceleration: 0.03,
 
     /** This configures the amount of change applied to acceleration when reaching boundaries  **/
-    penetrationAcceleration: 0.08
+    penetrationAcceleration: 0.08,
 
+    //wmz add
+    centering: false,
   };
 
   for (var key in options) {
@@ -253,6 +255,12 @@ var members = {
 
   /** {Number} Current factor to modify vertical scroll position with on every step */
   __decelerationVelocityY: null,
+
+  /*wmz add {Number} Offset to center left position */
+  __leftOffset: 0,
+
+  /*wmz add {Number} Offset to center top position */
+  __topOffset: 0,
 
   /*
    ---------------------------------------------------------------------------
@@ -751,7 +759,6 @@ var members = {
           // Compute relative event position to container
           var currentTouchLeftRel = currentTouchLeft - self.__clientLeft;
           var currentTouchTopRel = currentTouchTop - self.__clientTop;
-
           // Recompute left and top coordinates based on new zoom level
           scrollLeft = (currentTouchLeftRel + scrollLeft) * level / oldLevel - currentTouchLeftRel;
           scrollTop = (currentTouchTopRel + scrollTop) * level / oldLevel - currentTouchTopRel;
@@ -830,7 +837,6 @@ var members = {
       // Track scroll movement for decleration
       positions.push(scrollLeft, scrollTop, timeStamp);
 
-      // Sync scroll position
       self.__publish(scrollLeft, scrollTop, level);
 
       // Otherwise figure out whether we are switching into dragging mode now.
@@ -1041,7 +1047,8 @@ var members = {
 
           // Push values out
           if (self.__callback) {
-            self.__callback(self.__scrollLeft, self.__scrollTop, self.__zoomLevel);
+            // self.__callback(self.__scrollLeft, self.__scrollTop, self.__zoomLevel);
+            self.__callback(self.__scrollLeft - self.__leftOffset , self.__scrollTop - self.__topOffset , self.__zoomLevel); // wmz add
           }
         }
       };
@@ -1078,7 +1085,8 @@ var members = {
 
       // Push values out
       if (self.__callback) {
-        self.__callback(left, top, zoom);
+        // self.__callback(left, top, zoom);
+        self.__callback(left - self.__leftOffset, top - self.__topOffset, zoom); //wmz add
       }
 
       // Fix max scroll ranges
@@ -1105,6 +1113,28 @@ var members = {
 
     self.__maxScrollLeft = Math.max(self.__contentWidth * zoomLevel - self.__clientWidth, 0);
     self.__maxScrollTop = Math.max(self.__contentHeight * zoomLevel - self.__clientHeight, 0);
+
+    var xoffset = 0;
+    var yoffset = 0;
+
+    if(self.options.centering){
+
+      if (self.__clientWidth>(self.__contentWidth*self.__zoomLevel)){
+        xoffset = (self.__clientWidth-(self.__contentWidth*self.__zoomLevel))/2;
+      }else{
+        xoffset = 0;
+      }
+
+      if (self.__clientHeight>(self.__contentHeight*self.__zoomLevel)){
+        yoffset = (self.__clientHeight-(self.__contentHeight*self.__zoomLevel))/2;
+      }else{
+        yoffset = 0;
+      }
+    }
+
+    self.__leftOffset = xoffset;
+    self.__topOffset = yoffset;
+
   },
 
   /*
