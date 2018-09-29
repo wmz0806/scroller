@@ -11,7 +11,6 @@
  * Copyright 2011, Deutsche Telekom AG
  * License: MIT + Apache (V2)
  */
-
 import Animate from './Animate';
 
 var Scroller;
