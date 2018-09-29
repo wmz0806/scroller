@@ -65,7 +65,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yiminghe/zscroller.git"
+    "url": "git+https://github.com/wmz0806/scroller.git"
   },
   "scripts": {
     "build": "rc-tools run build",
