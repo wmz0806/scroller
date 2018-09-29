@@ -73,6 +73,8 @@ Scroller = function Scroller(callback, options) {
     /** This configures the amount of change applied to acceleration when reaching boundaries  **/
     penetrationAcceleration: 0.08,
 
+      zoomComplete: undefined,
+
     //wmz add
     centering: false,
   };
@@ -1070,8 +1072,8 @@ var members = {
             self.__zoomComplete();
             self.__zoomComplete = null;
           }
-          if (self.__zoomAllComplete) {
-            self.__zoomAllComplete();
+            if (self.options.zoomComplete) {
+                self.options.zoomComplete();
           }
         }
       };
@@ -1097,8 +1099,8 @@ var members = {
           self.__zoomComplete();
           self.__zoomComplete = null;
         }
-        if (self.__zoomAllComplete) {
-          self.__zoomAllComplete();
+        if (self.options.zoomComplete) {
+            self.options.zoomComplete();
         }
       }
     }
