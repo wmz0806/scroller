@@ -993,7 +993,6 @@ var members = {
         }
       }
     }
-
     // Fully cleanup list
     self.__positions.length = 0;
   },
@@ -1072,6 +1071,9 @@ var members = {
             self.__zoomComplete();
             self.__zoomComplete = null;
           }
+          if (self.__zoomAllComplete) {
+            self.__zoomAllComplete();
+          }
         }
       };
 
@@ -1095,6 +1097,9 @@ var members = {
         if (self.__zoomComplete) {
           self.__zoomComplete();
           self.__zoomComplete = null;
+        }
+        if (self.__zoomAllComplete) {
+          self.__zoomAllComplete();
         }
       }
     }
