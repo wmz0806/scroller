@@ -757,16 +757,14 @@ var members = {
         // Only do further compution when change happened
         if (oldLevel !== level) {
           // Compute relative event position to container
-
           // var currentTouchLeftRel = currentTouchLeft - self.__clientLeft;
           // var currentTouchTopRel = currentTouchTop - self.__clientTop;
+          //wmz add
           var currentTouchLeftRel = currentTouchLeft - self.__clientLeft - self.__leftOffset;
           var currentTouchTopRel = currentTouchTop - self.__clientTop - self.__topOffset;
-
           // Recompute left and top coordinates based on new zoom level
           scrollLeft = (currentTouchLeftRel + scrollLeft) * level / oldLevel - currentTouchLeftRel;
           scrollTop = (currentTouchTopRel + scrollTop) * level / oldLevel - currentTouchTopRel;
-
           // Recompute max scroll values
           self.__computeScrollMax(level);
         }
