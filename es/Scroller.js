@@ -1136,10 +1136,10 @@ var members = {
 
     }
 
-    self.__leftOffset = xoffset * self.__zoomLevel;
-    self.__topOffset = yoffset * self.__zoomLevel;
-    // self.__leftOffset = xoffset;
-    // self.__topOffset = yoffset;
+    // self.__leftOffset = xoffset * self.__zoomLevel;
+    // self.__topOffset = yoffset * self.__zoomLevel;
+    self.__leftOffset = xoffset;
+    self.__topOffset = yoffset;
 
   },
 
