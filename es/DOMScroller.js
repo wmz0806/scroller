@@ -232,7 +232,8 @@ DOMScroller.prototype = {
 
     // refresh the position for zooming purposes
     var rect = container.getBoundingClientRect();
-    scroller.setPosition(rect.x + container.clientLeft, rect.y + container.clientTop);
+    // scroller.setPosition(rect.x + container.clientLeft, rect.y + container.clientTop);
+    scroller.setPosition(rect.left + container.clientLeft, rect.top + container.clientTop); //wmz add
   },
   destroy: function destroy() {
     this._destroyed = true;
