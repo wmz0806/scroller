@@ -607,7 +607,6 @@ var members = {
 
     var self = this;
     var change = wheelDelta > 0 ? 0.97 : 1.03;
-
     return self.zoomTo(self.__zoomLevel * change, false, pageX - self.__clientLeft, pageY - self.__clientTop);
   },
 
@@ -729,6 +728,7 @@ var members = {
       currentTouchTop = touches[0].pageY;
     }
 
+
     var positions = self.__positions;
 
     // Are we already is dragging mode?
@@ -756,10 +756,13 @@ var members = {
 
         // Only do further compution when change happened
         if (oldLevel !== level) {
-
           // Compute relative event position to container
-          var currentTouchLeftRel = currentTouchLeft - self.__clientLeft;
-          var currentTouchTopRel = currentTouchTop - self.__clientTop;
+
+          // var currentTouchLeftRel = currentTouchLeft - self.__clientLeft;
+          // var currentTouchTopRel = currentTouchTop - self.__clientTop;
+          var currentTouchLeftRel = currentTouchLeft - self.__clientLeft - self.__leftOffset;
+          var currentTouchTopRel = currentTouchTop - self.__clientTop - self.__topOffset;
+
           // Recompute left and top coordinates based on new zoom level
           scrollLeft = (currentTouchLeftRel + scrollLeft) * level / oldLevel - currentTouchLeftRel;
           scrollTop = (currentTouchTopRel + scrollTop) * level / oldLevel - currentTouchTopRel;
@@ -930,7 +933,6 @@ var members = {
         // If start and stop position is identical in a 100ms timeframe,
         // we cannot compute any useful deceleration.
         if (startPos !== endPos) {
-
           // Compute relative movement between these two points
           var timeOffset = positions[endPos] - positions[startPos];
           var movedLeft = self.__scrollLeft - positions[startPos - 2];
@@ -1012,7 +1014,6 @@ var members = {
    * @param animate {Boolean?false} Whether animation should be used to move to the new coordinates
    */
   __publish: function __publish(left, top, zoom, animate) {
-
     var self = this;
 
     // Remember whether we had an animation, then we try to continue based on the current "drive" of the animation
@@ -1023,7 +1024,6 @@ var members = {
     }
 
     if (animate && self.options.animating) {
-
       // Keep scheduled positions for scrollBy/zoomBy functionality
       self.__scheduledLeft = left;
       self.__scheduledTop = top;
@@ -1038,7 +1038,6 @@ var members = {
       var diffZoom = zoom - oldZoom;
 
       var step = function step(percent, now, render) {
-
         if (render) {
 
           self.__scrollLeft = oldLeft + diffLeft * percent;
@@ -1082,14 +1081,14 @@ var members = {
       self.__isAnimating = Animate.start(step, verify, completed, self.options.animationDuration, wasAnimating ? easeOutCubic : easeInOutCubic);
     } else {
 
-      self.__scheduledLeft = self.__scrollLeft = left;
+      self.__scheduledLeft = self.__scrollLeft = left ;
       self.__scheduledTop = self.__scrollTop = top;
       self.__scheduledZoom = self.__zoomLevel = zoom;
 
       // Push values out
       if (self.__callback) {
         // self.__callback(left, top, zoom);
-        self.__callback(left - self.__leftOffset, top - self.__topOffset, zoom); //wmz add
+        self.__callback(left- self.__leftOffset, top - self.__topOffset, zoom); //wmz add
       }
 
       // Fix max scroll ranges
@@ -1125,21 +1124,24 @@ var members = {
 
     if(self.options.centering){
 
-      if (self.__clientWidth>(self.__contentWidth*self.__zoomLevel)){
-        xoffset = (self.__clientWidth-(self.__contentWidth*self.__zoomLevel))/2;
-      }else{
+      if (self.__clientWidth > (self.__contentWidth * self.__zoomLevel)) {
+        xoffset = (self.__clientWidth - (self.__contentWidth * self.__zoomLevel)) / 2;
+      } else {
         xoffset = 0;
       }
 
-      if (self.__clientHeight>(self.__contentHeight*self.__zoomLevel)){
-        yoffset = (self.__clientHeight-(self.__contentHeight*self.__zoomLevel))/2;
-      }else{
+      if (self.__clientHeight > (self.__contentHeight * self.__zoomLevel)) {
+        yoffset = (self.__clientHeight - (self.__contentHeight * self.__zoomLevel)) / 2;
+      } else {
         yoffset = 0;
       }
+
     }
 
-    self.__leftOffset = xoffset;
-    self.__topOffset = yoffset;
+    self.__leftOffset = xoffset * self.__zoomLevel;
+    self.__topOffset = yoffset * self.__zoomLevel;
+    // self.__leftOffset = xoffset;
+    // self.__topOffset = yoffset;
 
   },
 
