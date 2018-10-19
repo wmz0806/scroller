@@ -280,6 +280,7 @@ DOMScroller.prototype = {
 
     var startTouches;
     this.bindEvent(container, 'touchstart', function (e) {
+
       lockMouse = true;
       if (releaseLockTimer) {
         clearTimeout(releaseLockTimer);
@@ -290,7 +291,15 @@ DOMScroller.prototype = {
         return;
       }
 
-      startTouches = e.touches;
+      //wmz add
+      startTouches = [];
+      for(var i = 0, l = e.touches.length;i<l; i++){
+        var touch = e.touches[i];
+        startTouches.push({
+          pageX:  touch.pageX,
+          pageY:  touch.pageY
+        });
+      }
 
       _this2.clearScrollbarTimer();
       // reflow since the container may have changed
@@ -310,6 +319,8 @@ DOMScroller.prototype = {
         lockMouse = false;
       }, 300);
     };
+
+    var _time;
 
     if (preventDefaultOnTouchMove !== false) {
       this.bindEvent(container, 'touchmove', function (e) {
